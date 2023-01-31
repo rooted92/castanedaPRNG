@@ -15,7 +15,6 @@ let previousNames = [];
 
 // set add event listeners
 searchBtn.addEventListener('click', function () {
-    // showData.textContent = '';
     input = searchInput.value;
     GetStudentData(input);// add input after testing
 });
@@ -54,9 +53,8 @@ const CreateStudenListElements = () => {
 
 // retrieve data
 async function GetStudentData() {
-    const promise = await fetch('../data/data.json');
+    const promise = await fetch('./data/data.json');
     const data = await promise.json();
-    let keys;
     if (input === '') {
         alert('Please enter first or last name, or both.');
     }
@@ -71,27 +69,18 @@ async function GetStudentData() {
 }
 
 async function GetRandomStudent() {
-    const promise = await fetch('../data/data.json');
+    const promise = await fetch('./data/data.json');
     const data = await promise.json();
-    console.log(data);
     let randomIndex = Math.floor(Math.random() * data.studentNames.length);
-    console.log(data.studentNames[randomIndex]);
     CreateStudentDataElements(data.studentNames[randomIndex].firstName, data.studentNames[randomIndex].lastName);
     PopulateList(data.studentNames[randomIndex].firstName, data.studentNames[randomIndex].lastName);
 }
 
 // function to display list
 const PopulateList = (fName, lName) => {
-    console.log(`Array before push: ${previousNames.length}`);
-
     if (previousNames.length >= 5) {
         previousNames.shift();
-        console.log('Did i shift? ' + previousNames.length);
     }
-
     previousNames.push(`${fName} ${lName}`);
-
-    console.log(`Array in for loop after push: ${previousNames.length}`);
     CreateStudenListElements();
-    console.log(`Array after pushing: ${previousNames.length}`);
 }
